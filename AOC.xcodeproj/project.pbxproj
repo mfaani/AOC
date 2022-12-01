@@ -13,6 +13,10 @@
 		2613A6CC2938DE3B0047F106 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2613A6CA2938DE3B0047F106 /* Main.storyboard */; };
 		2613A6CE2938DE3E0047F106 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2613A6CD2938DE3E0047F106 /* Assets.xcassets */; };
 		2613A6D12938DE3E0047F106 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2613A6CF2938DE3E0047F106 /* LaunchScreen.storyboard */; };
+		2613A6D92938DE4F0047F106 /* Reader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2613A6D82938DE4F0047F106 /* Reader.swift */; };
+		2613A6DC2938EAEC0047F106 /* day1-sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2613A6DB2938DEF40047F106 /* day1-sample.txt */; };
+		2613A6DF2938EC640047F106 /* Day1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2613A6DE2938EC640047F106 /* Day1.swift */; };
+		2613A6E12938F0150047F106 /* day1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2613A6E02938F0150047F106 /* day1.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		2613A6CD2938DE3E0047F106 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2613A6D02938DE3E0047F106 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2613A6D22938DE3E0047F106 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2613A6D82938DE4F0047F106 /* Reader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reader.swift; sourceTree = "<group>"; };
+		2613A6DB2938DEF40047F106 /* day1-sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "day1-sample.txt"; sourceTree = "<group>"; };
+		2613A6DE2938EC640047F106 /* Day1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day1.swift; sourceTree = "<group>"; };
+		2613A6E02938F0150047F106 /* day1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day1.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +64,51 @@
 		2613A6C32938DE3B0047F106 /* AOC */ = {
 			isa = PBXGroup;
 			children = (
+				2613A6C82938DE3B0047F106 /* ViewController.swift */,
+				2613A6DA2938DED40047F106 /* 2022 */,
+				2613A6E32938F03C0047F106 /* Helpers */,
+				269D4A652938F3D500D2EBB3 /* Config */,
+			);
+			path = AOC;
+			sourceTree = "<group>";
+		};
+		2613A6DA2938DED40047F106 /* 2022 */ = {
+			isa = PBXGroup;
+			children = (
+				2613A6DD2938EC3F0047F106 /* Day1 */,
+			);
+			path = 2022;
+			sourceTree = "<group>";
+		};
+		2613A6DD2938EC3F0047F106 /* Day1 */ = {
+			isa = PBXGroup;
+			children = (
+				2613A6DB2938DEF40047F106 /* day1-sample.txt */,
+				2613A6E02938F0150047F106 /* day1.txt */,
+				2613A6DE2938EC640047F106 /* Day1.swift */,
+			);
+			path = Day1;
+			sourceTree = "<group>";
+		};
+		2613A6E32938F03C0047F106 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2613A6D82938DE4F0047F106 /* Reader.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		269D4A652938F3D500D2EBB3 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				2613A6D22938DE3E0047F106 /* Info.plist */,
 				2613A6C42938DE3B0047F106 /* AppDelegate.swift */,
 				2613A6C62938DE3B0047F106 /* SceneDelegate.swift */,
-				2613A6C82938DE3B0047F106 /* ViewController.swift */,
 				2613A6CA2938DE3B0047F106 /* Main.storyboard */,
 				2613A6CD2938DE3E0047F106 /* Assets.xcassets */,
 				2613A6CF2938DE3E0047F106 /* LaunchScreen.storyboard */,
-				2613A6D22938DE3E0047F106 /* Info.plist */,
 			);
-			path = AOC;
+			path = Config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,7 +169,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2613A6E12938F0150047F106 /* day1.txt in Resources */,
 				2613A6D12938DE3E0047F106 /* LaunchScreen.storyboard in Resources */,
+				2613A6DC2938EAEC0047F106 /* day1-sample.txt in Resources */,
 				2613A6CE2938DE3E0047F106 /* Assets.xcassets in Resources */,
 				2613A6CC2938DE3B0047F106 /* Main.storyboard in Resources */,
 			);
@@ -139,7 +185,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2613A6C92938DE3B0047F106 /* ViewController.swift in Sources */,
+				2613A6DF2938EC640047F106 /* Day1.swift in Sources */,
 				2613A6C52938DE3B0047F106 /* AppDelegate.swift in Sources */,
+				2613A6D92938DE4F0047F106 /* Reader.swift in Sources */,
 				2613A6C72938DE3B0047F106 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,7 +337,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 98X4YPN52C;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AOC/Info.plist;
+				INFOPLIST_FILE = AOC/Config/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -317,7 +365,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 98X4YPN52C;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AOC/Info.plist;
+				INFOPLIST_FILE = AOC/Config/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
