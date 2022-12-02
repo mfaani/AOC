@@ -2,7 +2,7 @@
 //  Day2.swift
 //  AOC
 //
-//  Created by Faani Tabrizi Nezhaad, Mohammad on 12/2/22.
+//  Created bymfaani on 12/2/22.
 //
 
 import Foundation
