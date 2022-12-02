@@ -17,6 +17,9 @@
 		2613A6DC2938EAEC0047F106 /* day1-sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2613A6DB2938DEF40047F106 /* day1-sample.txt */; };
 		2613A6DF2938EC640047F106 /* Day1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2613A6DE2938EC640047F106 /* Day1.swift */; };
 		2613A6E12938F0150047F106 /* day1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2613A6E02938F0150047F106 /* day1.txt */; };
+		269D4A68293A36A700D2EBB3 /* day2-sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 269D4A67293A36A700D2EBB3 /* day2-sample.txt */; };
+		269D4A6A293A36B400D2EBB3 /* Day2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269D4A69293A36B400D2EBB3 /* Day2.swift */; };
+		269D4A6C293A404500D2EBB3 /* day2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 269D4A6B293A404500D2EBB3 /* day2.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		2613A6DB2938DEF40047F106 /* day1-sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "day1-sample.txt"; sourceTree = "<group>"; };
 		2613A6DE2938EC640047F106 /* Day1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day1.swift; sourceTree = "<group>"; };
 		2613A6E02938F0150047F106 /* day1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day1.txt; sourceTree = "<group>"; };
+		269D4A67293A36A700D2EBB3 /* day2-sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "day2-sample.txt"; sourceTree = "<group>"; };
+		269D4A69293A36B400D2EBB3 /* Day2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day2.swift; sourceTree = "<group>"; };
+		269D4A6B293A404500D2EBB3 /* day2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = day2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +81,7 @@
 		2613A6DA2938DED40047F106 /* 2022 */ = {
 			isa = PBXGroup;
 			children = (
+				269D4A66293A368F00D2EBB3 /* Day2 */,
 				2613A6DD2938EC3F0047F106 /* Day1 */,
 			);
 			path = 2022;
@@ -109,6 +116,16 @@
 				2613A6CF2938DE3E0047F106 /* LaunchScreen.storyboard */,
 			);
 			path = Config;
+			sourceTree = "<group>";
+		};
+		269D4A66293A368F00D2EBB3 /* Day2 */ = {
+			isa = PBXGroup;
+			children = (
+				269D4A67293A36A700D2EBB3 /* day2-sample.txt */,
+				269D4A6B293A404500D2EBB3 /* day2.txt */,
+				269D4A69293A36B400D2EBB3 /* Day2.swift */,
+			);
+			path = Day2;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,8 +188,10 @@
 			files = (
 				2613A6E12938F0150047F106 /* day1.txt in Resources */,
 				2613A6D12938DE3E0047F106 /* LaunchScreen.storyboard in Resources */,
+				269D4A68293A36A700D2EBB3 /* day2-sample.txt in Resources */,
 				2613A6DC2938EAEC0047F106 /* day1-sample.txt in Resources */,
 				2613A6CE2938DE3E0047F106 /* Assets.xcassets in Resources */,
+				269D4A6C293A404500D2EBB3 /* day2.txt in Resources */,
 				2613A6CC2938DE3B0047F106 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -185,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2613A6C92938DE3B0047F106 /* ViewController.swift in Sources */,
+				269D4A6A293A36B400D2EBB3 /* Day2.swift in Sources */,
 				2613A6DF2938EC640047F106 /* Day1.swift in Sources */,
 				2613A6C52938DE3B0047F106 /* AppDelegate.swift in Sources */,
 				2613A6D92938DE4F0047F106 /* Reader.swift in Sources */,

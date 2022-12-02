@@ -19,13 +19,9 @@ struct Reader{
         
         return trimmedInput
     }
-    
-//    func readX() -> String {
-//        if let startWordsURL = Bundle.main.url(forResource: fileName, withExtension: "txt") { // FAILS HERE
-//            if let startWords = try? String(contentsOf: startWordsURL) {
-//                return startWords
-//            }
-//        }
-//        fatalError()
-//    }
+    // might be used later
+    struct Column<T> {
+        var one: T
+        var two: T
+    }
 }
