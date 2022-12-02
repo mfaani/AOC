@@ -65,15 +65,7 @@ struct Day2 {
         func decideMyChoice(vs opponent: Choice) -> Choice {
             switch (self) {
             case .win:
-//                if opponent == .rock {
-//                    return .paper
-//                } else if opponent == .paper {
-//                    return .scissors
-//                } else {
-//                    return .rock
-//                }
-                return Choice.allCases.first(where: {$0 > opponent})!
-                
+                return Choice.allCases.first(where: {$0 > opponent})!                
             case .draw:
                 return opponent
             case .lose:
