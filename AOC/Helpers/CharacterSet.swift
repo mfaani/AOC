@@ -2,7 +2,7 @@
 //  CharacterSet.swift
 //  AOC
 //
-//  Created by Faani Tabrizi Nezhaad, Mohammad on 12/3/22.
+//  Created by mfaani on 12/3/22.
 //
 
 import Foundation
