@@ -11,7 +11,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let day = Y2022.Day3()
+        let day = Y2022.Day4()
         print(day.solveA())
         print(day.solveB())
     }
