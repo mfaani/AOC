@@ -12,16 +12,27 @@ struct Reader{
     let fileName: String
     let bundle = Bundle.main
     
-    func read() -> String {
+    func read(withTrimming: Bool = true) -> String {
         let inputURL = bundle.path(forResource: fileName, ofType: "txt")!
         let file = try! String(contentsOfFile: inputURL)
         let trimmedInput = file.trimmingCharacters(in: .whitespaces)
         
-        return trimmedInput
+        
+        if withTrimming {
+            return file.trimmingCharacters(in: .whitespaces)
+        } else {
+            return file
+        }
     }
     // might be used later
     struct Column<T> {
         var one: T
         var two: T
+    }
+}
+
+extension Collection where Element: StringProtocol {
+    func filterOutEmpties() -> [Element] {
+        return self.filter { !$0.isEmpty }
     }
 }
