@@ -28,10 +28,10 @@ extension Y2022 {
             input.components(separatedBy: .newlines).filter { !$0.isEmpty }.forEach { line in
                 // read each line
                 let sections = line.components(separatedBy: ",")
-                let b1 = sections[0].components(separatedBy: "-")
-                let b2 = sections[1].components(separatedBy: "-")
-                let r1 = Int(String(b1.first!))!...Int(String(b1.last!))!
-                let r2 = Int(String(b2.first!))!...Int(String(b2.last!))!
+                let bounds1 = sections[0].components(separatedBy: "-")
+                let bounds2 = sections[1].components(separatedBy: "-")
+                let r1 = Int(String(bounds1.first!))!...Int(String(bounds1.last!))!
+                let r2 = Int(String(bounds2.first!))!...Int(String(bounds2.last!))!
                 if does(r1, contain: r2) || does(r2, contain: r1) {
                     ans += 1
                 }
@@ -54,10 +54,10 @@ extension Y2022 {
             input.components(separatedBy: .newlines).filter { !$0.isEmpty }.forEach { line in
                 // read each line
                 let sections = line.components(separatedBy: ",")
-                let b1 = sections[0].components(separatedBy: "-")
-                let b2 = sections[1].components(separatedBy: "-")
-                let r1 = Int(String(b1.first!))!...Int(String(b1.last!))!
-                let r2 = Int(String(b2.first!))!...Int(String(b2.last!))!
+                let bounds1 = sections[0].components(separatedBy: "-")
+                let bounds2 = sections[1].components(separatedBy: "-")
+                let r1 = Int(String(bounds1.first!))!...Int(String(bounds1.last!))!
+                let r2 = Int(String(bounds2.first!))!...Int(String(bounds2.last!))!
                 if r1.overlaps(r2) {
                     ans += 1
                 }
