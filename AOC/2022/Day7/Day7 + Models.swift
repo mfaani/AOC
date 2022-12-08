@@ -36,35 +36,50 @@ class Directory: Item {
         return sum
     }
     
+    /// finds correct directory based on path
+    /// adds new directory to that correct directory
+    /// - Example:
+    /// So fromPath would be something like: `/aaa/bbb`
+    /// We want to then add 'ccc' onto it and turn it into `/aaa/bbb/ccc`
+    ///
     func addDirectory(_ directoryName: String, fromPath: URL) {
         if directoryName == "/" { return }
         // start from the root directory...
-        var lookupDirectory: Directory? = self
-        var wasFound = false
+        var lookupDirectory: Directory = self
+        print("currentPath:", fromPath)
         for (i, segment) in fromPath.path.components(separatedBy: "/").filterOutEmpties().enumerated() {
-            let found = lookupDirectory?.directories.first { directory in
-                wasFound = true
-                return directory.path.absoluteString.components(separatedBy: "/")[i] == segment
-            }
+            let found = lookupDirectory.directories.first { directory in
+                return directory.path.absoluteString.components(separatedBy: "/").filterOutEmpties()[i] == segment
+            }!
             lookupDirectory = found
         }
         
-        let newPath = fromPath.appendingPathComponent(directoryName)
-        directories.append(Directory(path: newPath))
+        lookupDirectory.directories.append(Directory(path: fromPath.appendingPathComponent(directoryName)))
     }
     
-    func addFile(_ fileName: String, with size: Int) {
-        files.append(File(name: fileName, size: size))
+    func addFile(_ fileName: String, with size: Int, fromPath: URL) {
+        var lookupDirectory: Directory = self
+        print("currentPath:", fromPath)
+        for (i, segment) in fromPath.path.components(separatedBy: "/").filterOutEmpties().enumerated() {
+            let found = lookupDirectory.directories.first { directory in
+                return directory.path.absoluteString.components(separatedBy: "/").filterOutEmpties()[i] == segment
+            }!
+            lookupDirectory = found
+        }
+        lookupDirectory.files.append(File(name: fileName, size: size))
     }
 }
 
+// I expect that after the 4th time of addFile.append, I'd see root.directories[0].files I should file f & g
+
+/// This isn't perfect, but it works to some extent. 
 extension Directory: CustomDebugStringConvertible {
     var debugDescription: String {
         let names: [String] = files.map { $0.name }
-        var directories: [String: [String]] = directories.reduce([:]) { partialResult, directory in
-            var new = partialResult
-            new[directory.path.lastPathComponent] = directory.directories.map {$0.debugDescription}
-            return new
+        let directories: [String: [String]] = directories.reduce([:]) { result, directory in
+            var result = result
+            result[directory.path.lastPathComponent] = directory.directories.map {$0.debugDescription} + directory.files.map { $0.name }
+            return result
         }
         
         return "directory: \(path.lastPathComponent), files: \(names), directories: \(directories)"

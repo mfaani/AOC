@@ -52,6 +52,7 @@ extension Y2022 {
         mutating func solveA() {
             let input = reader.read()
             for line in input.components(separatedBy: .newlines).filterOutEmpties() {
+                print("line:", line)
                 let components = line.components(separatedBy: .whitespaces).filterOutEmpties()
                 if components.first == "$" {
                     process(components)
@@ -59,7 +60,7 @@ extension Y2022 {
                     root.addDirectory(components.last!, fromPath: currentPath)
                     print(root)
                 } else if let size = Int(components.first!) {
-                    root.addFile(components.last!, with: size)
+                    root.addFile(components.last!, with: size, fromPath: currentPath)
                     print(root)
                 } else {
                     fatalError("wtf. there shouldn't be anything else left. ")
