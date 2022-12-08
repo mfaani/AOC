@@ -28,10 +28,10 @@ class Directory: Item {
     var fileSizes: Int {
         return files.map {$0.size}.reduce(0,+)
     }
-    var size: Int {
+    var totalSize: Int {
         var sum = fileSizes
         for directory in directories {
-            sum += directory.fileSizes
+            sum += directory.fileSizes + directory.totalSize
         }
         return sum
     }

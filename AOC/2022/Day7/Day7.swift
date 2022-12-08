@@ -49,8 +49,14 @@ extension Y2022 {
         let reader = Reader(fileName: "day7-sample")
         var currentPath: URL = URL(string: "/")!
         var root: Directory = Directory(path: URL(string: "/")!)
-        mutating func solveA() {
+        let maxSize = 100000
+        mutating func solveA() -> Int {
             let input = reader.read()
+            buildTree(from: input)
+            return countDirectoriesUnder(maxSize)
+        }
+        
+        mutating func buildTree(from input: String) {
             for line in input.components(separatedBy: .newlines).filterOutEmpties() {
                 print("line:", line)
                 let components = line.components(separatedBy: .whitespaces).filterOutEmpties()
@@ -92,6 +98,24 @@ extension Y2022 {
                 break
             default:
                 currentPath.appendPathComponent(directory)
+            }
+        }
+        
+        mutating func countDirectoriesUnder(_ maxSize: Int) -> Int {
+                        
+            traverse(from: root, maxSize: maxSize)
+            return total
+        }
+        var total = 0
+        mutating func traverse(from dir: Directory, maxSize: Int) {
+            let size = dir.totalSize
+            if size < maxSize {
+                print("goodSize:", size)
+                total += size
+            }
+            
+            for directory in dir.directories {
+                traverse(from: directory, maxSize: maxSize)
             }
         }
     }
