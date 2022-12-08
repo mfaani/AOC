@@ -36,6 +36,18 @@ class Directory: Item {
         return sum
     }
     
+    /*
+     files: b + c
+     directories:
+      - a
+        files: f + g + h
+        directories:
+            - e:
+                - files: i
+                - directories: 0
+      - d
+     */
+    
     /// finds correct directory based on path
     /// adds new directory to that correct directory
     /// - Example:

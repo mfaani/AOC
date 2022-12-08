@@ -19,9 +19,9 @@ struct Reader{
         
         
         if withTrimming {
-            return file.trimmingCharacters(in: .whitespaces)
+            return file.trimmingCharacters(in: .whitespaces).components(separatedBy: "mfaani").first!
         } else {
-            return file
+            return file.components(separatedBy: "mfaani").first!
         }
     }
     // might be used later

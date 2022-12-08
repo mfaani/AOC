@@ -53,7 +53,14 @@ extension Y2022 {
         mutating func solveA() -> Int {
             let input = reader.read()
             buildTree(from: input)
-            return countDirectoriesUnder()
+            return countDirectoriesUnderMax()
+        }
+        let totalSpace = 70000000
+        let requiredSpace = 30000000
+        mutating func solveB() -> Int {
+            let input = reader.read()
+            buildTree(from: input)
+            return getSizeOfDirectoryToRemove()
         }
         
         mutating func buildTree(from input: String) {
@@ -101,13 +108,33 @@ extension Y2022 {
             }
         }
         
-        mutating func countDirectoriesUnder() -> Int {
+        mutating func getSizeOfDirectoryToRemove() -> Int {
+            let freeSpace = totalSpace - root.totalSize
+            let needToFreeSpace = requiredSpace - freeSpace
+            traverseAndGetSizeOfDirectoryToRemove(from: root)
+            print(root)
+            sizes.sort()
+            print("sizes", sizes)
+            return sizes.first { size in
+                size >= needToFreeSpace
+            }!
+            
+        }
+        lazy var sizes: [Int] = [root.totalSize]
+        mutating func traverseAndGetSizeOfDirectoryToRemove(from dir: Directory) {
+            sizes.append(dir.totalSize)
+            for directory in dir.directories {
+                traverseAndGetSizeOfDirectoryToRemove(from: directory)
+            }
+        }
+        
+        mutating func countDirectoriesUnderMax() -> Int {
                         
-            traverse(from: root)
+            traverseAndSumUnderMax(from: root)
             return total
         }
         var total = 0
-        mutating func traverse(from dir: Directory) {
+        mutating func traverseAndSumUnderMax(from dir: Directory) {
             let size = dir.totalSize
             if size < maxSize {
                 print("goodSize:", size)
@@ -115,7 +142,7 @@ extension Y2022 {
             }
             
             for directory in dir.directories {
-                traverse(from: directory)
+                traverseAndSumUnderMax(from: directory)
             }
         }
     }

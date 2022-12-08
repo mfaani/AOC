@@ -12,8 +12,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         var day = Y2022.Day7()
-        print("final:", day.solveA())
-//        print(day.solveB())
+//        print("final:", day.solveA())
+        print("final:", day.solveB())
     }
 }
 
