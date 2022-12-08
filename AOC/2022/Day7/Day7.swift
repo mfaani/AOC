@@ -44,17 +44,11 @@ import Foundation
  
  */
 
-enum Command: String {
-    case cd
-    case ls
-}
-
 extension Y2022 {
     struct Day7 {
         let reader = Reader(fileName: "day7-sample")
         var currentPath: URL = URL(string: "/")!
-        var currentItems: [Item] = []
-        var root: Directory
+        var root: Directory = Directory(path: URL(string: "/")!)
         mutating func solveA() {
             let input = reader.read()
             for line in input.components(separatedBy: .newlines).filterOutEmpties() {
@@ -62,7 +56,13 @@ extension Y2022 {
                 if components.first == "$" {
                     process(components)
                 } else if components.first == "dir" {
-                    
+                    root.addDirectory(components.last!, fromPath: currentPath)
+                    print(root)
+                } else if let size = Int(components.first!) {
+                    root.addFile(components.last!, with: size)
+                    print(root)
+                } else {
+                    fatalError("wtf. there shouldn't be anything else left. ")
                 }
             }
         }
@@ -94,37 +94,4 @@ extension Y2022 {
             }
         }
     }
-}
-
-enum ResourceType {
-    case dir
-    case file
-}
-
-protocol Item {
-    var type: ResourceType { get set }
-}
-
-struct Directory: Item {
-    var type: ResourceType = .dir
-    let path: URL
-    var files: [File]
-    var directories: [Directory]
-    
-    var fileSizes: Int {
-        return files.map {$0.size}.reduce(0,+)
-    }
-    var size: Int {
-        var sum = fileSizes
-        for directory in directories {
-            sum += directory.fileSizes
-        }
-        return sum
-    }
-}
-
-struct File {
-    var type: ResourceType = .file
-    let name: String
-    let size: Int
 }
