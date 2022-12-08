@@ -31,7 +31,7 @@ class Directory: Item {
     var totalSize: Int {
         var sum = fileSizes
         for directory in directories {
-            sum += directory.fileSizes + directory.totalSize
+            sum += directory.totalSize
         }
         return sum
     }

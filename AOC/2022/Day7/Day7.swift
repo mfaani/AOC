@@ -46,14 +46,14 @@ import Foundation
 
 extension Y2022 {
     struct Day7 {
-        let reader = Reader(fileName: "day7-sample")
+        let reader = Reader(fileName: "day7")
         var currentPath: URL = URL(string: "/")!
         var root: Directory = Directory(path: URL(string: "/")!)
         let maxSize = 100000
         mutating func solveA() -> Int {
             let input = reader.read()
             buildTree(from: input)
-            return countDirectoriesUnder(maxSize)
+            return countDirectoriesUnder()
         }
         
         mutating func buildTree(from input: String) {
@@ -101,13 +101,13 @@ extension Y2022 {
             }
         }
         
-        mutating func countDirectoriesUnder(_ maxSize: Int) -> Int {
+        mutating func countDirectoriesUnder() -> Int {
                         
-            traverse(from: root, maxSize: maxSize)
+            traverse(from: root)
             return total
         }
         var total = 0
-        mutating func traverse(from dir: Directory, maxSize: Int) {
+        mutating func traverse(from dir: Directory) {
             let size = dir.totalSize
             if size < maxSize {
                 print("goodSize:", size)
@@ -115,7 +115,7 @@ extension Y2022 {
             }
             
             for directory in dir.directories {
-                traverse(from: directory, maxSize: maxSize)
+                traverse(from: directory)
             }
         }
     }
