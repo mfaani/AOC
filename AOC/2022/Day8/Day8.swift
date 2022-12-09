@@ -23,6 +23,8 @@ extension Y2022 {
         lazy var input = reader.read()
         lazy var visibleCount = rows.count * 4 - 4
         
+        var maxPoint = 0
+        
         mutating func solveA() -> Int{
             buildRowsAndColumns()
             print("count:", visibleCount)
@@ -40,6 +42,39 @@ extension Y2022 {
             
             return visibleCount
         }
+        mutating func solveB() -> Int{
+            buildRowsAndColumns()
+            // Using zip, because when I used `enumerated` the index started from `0` which I didn't want. I could have hacked and just increased the index by 1, but not doing that...
+            func getCountOfSmaller(from tree: Character, inDirectionOf trees: [Character]) -> Int {
+                var res = 0
+                for surroundingTree in trees {
+                    if tree > surroundingTree {
+                        res += 1
+                    } else if tree == surroundingTree {
+                        res += 1
+                        break
+                    } else if tree < surroundingTree {
+                        res += 1
+                        break
+                    }
+                }
+                return max(res,1)
+            }
+            for (i,row) in zip(rows[1..<(rows.count - 1)].indices, rows[1..<(rows.count - 1)]) {
+                for (j, column) in zip(columns[1..<(columns.count - 1)].indices, columns[1..<(columns.count - 1)])  {
+                    var score: [Int] = []
+                    score.append(getCountOfSmaller(from: rows[i][j], inDirectionOf: Array(row[..<j].reversed())))
+                    score.append(getCountOfSmaller(from: rows[i][j], inDirectionOf: Array(row[(j + 1)...])))
+                    score.append(getCountOfSmaller(from: rows[i][j], inDirectionOf: Array(column[..<i].reversed())))
+                    score.append(getCountOfSmaller(from: rows[i][j], inDirectionOf: Array(column[(i + 1)...])))
+                    print("item at row:", i, "col:", j,":", rows[i][j] , "score is:", score)
+                    maxPoint = max(maxPoint, score.reduce(1, *))
+                }
+            }
+            
+            return maxPoint
+        }
+        
         
         mutating func buildRowsAndColumns() {
             for line in input.components(separatedBy: .newlines).filterOutEmpties() {
