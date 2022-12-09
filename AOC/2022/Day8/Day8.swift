@@ -26,10 +26,9 @@ extension Y2022 {
         mutating func solveA() -> Int{
             buildRowsAndColumns()
             print("count:", visibleCount)
-            for (i,row) in rows[1..<(rows.count - 1)].enumerated() {
-                let i = i + 1
-                for (j, column) in columns[1..<(columns.count - 1)].enumerated() {
-                    let j = j + 1
+            // Using zip, because when I used `enumerated` the index started from `0` which I didn't want. I could have hacked and just increased the index by 1, but not doing that...
+            for (i,row) in zip(rows[1..<(rows.count - 1)].indices, rows[1..<(rows.count - 1)]) {
+                for (j, column) in zip(columns[1..<(columns.count - 1)].indices, columns[1..<(columns.count - 1)]) {
                     if rows[i][j] > (row[..<j].max() ?? "-") || rows[i][j] > (row[(j + 1)...].max() ?? "-") || rows[i][j] > (column[..<i].max() ?? "-") || rows[i][j] > (column[(i + 1)...].max() ?? "-") {
                         print("item at row:", i, "col:", j,":", rows[i][j] , "was tall enough")
                         visibleCount += 1
