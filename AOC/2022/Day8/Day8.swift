@@ -17,7 +17,7 @@ import Foundation
 
 extension Y2022 {
     struct Day8 {
-        let reader = Reader(fileName: "day8-sample")
+        let reader = Reader(fileName: "day8")
         var rows: [[Character]] = []
         var columns: [[Character]] = []
         lazy var input = reader.read()
@@ -27,8 +27,10 @@ extension Y2022 {
             buildRowsAndColumns()
             print("count:", visibleCount)
             for (i,row) in rows[1..<(rows.count - 1)].enumerated() {
+                let i = i + 1
                 for (j, column) in columns[1..<(columns.count - 1)].enumerated() {
-                    if rows[i][j] > (row[..<j].max() ?? "-") && rows[i][j] > (row[(j + 1)...].max() ?? "-") && rows[i][j] > (column[..<i].max() ?? "-") && rows[i][j] > (column[(i + 1)...].max() ?? "-") {
+                    let j = j + 1
+                    if rows[i][j] > (row[..<j].max() ?? "-") || rows[i][j] > (row[(j + 1)...].max() ?? "-") || rows[i][j] > (column[..<i].max() ?? "-") || rows[i][j] > (column[(i + 1)...].max() ?? "-") {
                         print("item at row:", i, "col:", j,":", rows[i][j] , "was tall enough")
                         visibleCount += 1
                     } else {
