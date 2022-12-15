@@ -9,7 +9,7 @@ import Foundation
 
 extension Y2022 {
     struct Day11 {
-        let reader = Reader(fileName: "day11")
+        let reader = Reader(fileName: "day11-sample")
         lazy var input = reader.read()
         let builder = MonkeyBuilder()
         let controller = Controller()
@@ -54,13 +54,16 @@ struct Monkey {
     mutating func throwItems() -> [Transfer] {
         var transfers: [Transfer] = []
         for item in items {
-            let worryLevel = item.apply(Math.Operation(rawValue: operationLogicItems[0])!, with: Int(operationLogicItems[1]) ?? item)
+            // only used in case of old * old
+            let simpleItem = item % divisor
+            
+            let worryLevel = item.apply(Math.Operation(rawValue: operationLogicItems[0])!, with: Int(operationLogicItems[1]) ?? simpleItem)
             var index = 1
-            let currentWorryLevel = Int(round(Double(worryLevel / 3)))
-            if currentWorryLevel % divisor == 0 {
+            if worryLevel % divisor == 0 {
                 index = 0
             }
-            let transfer = Transfer(monkeyId: throwTos[index], item: Int(round(Double(worryLevel / 3))))
+            let adjustedWorry = worryLevel % divisor
+            let transfer = Transfer(monkeyId: throwTos[index], item: adjustedWorry)
             transfers.append(transfer)
         }
         items.removeAll()
@@ -82,9 +85,8 @@ class Controller {
     var business: [String: Int] = [:]
     
     func start() {
-        for _ in 0..<20 {
+        for j in 0..<10000 {
             for i in 0..<monkies.count {
-                
                 let transfers = monkies[i].throwItems()
                 business[monkies[i].id] = (business[monkies[i].id] ?? 0) + transfers.count
                 for transfer in transfers {
