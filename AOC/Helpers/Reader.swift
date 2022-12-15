@@ -17,7 +17,7 @@ struct Reader{
         let file = try! String(contentsOfFile: inputURL)
         let trimmedInput = file.trimmingCharacters(in: .whitespaces)
         
-        
+        /// - Attention: anything after 'mfaani' is considered notes for myself :D 
         if withTrimming {
             return file.trimmingCharacters(in: .whitespaces).components(separatedBy: "mfaani").first!
         } else {

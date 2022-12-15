@@ -24,6 +24,19 @@ extension Y2022 {
             }
             return rope.visitedTails.count
         }
+        
+        var knottedRope = KnottedRope()
+        mutating func solveB() -> Int {
+            for line in input.components(separatedBy: .newlines).filterOutEmpties() {
+                let components = line.components(separatedBy: .whitespaces).filterOutEmpties()
+                let direction = Direction(rawValue: components[0])!
+                let amount = Int(components[1])!
+                let motion = Motion(direction: direction, amount: amount)
+                print("line: \(motion)")
+                knottedRope.moveHead(from: motion)
+            }
+            return knottedRope.visitedTails.count
+        }
     }
 }
 typealias Vector = Point
@@ -82,12 +95,9 @@ struct Rope {
     mutating func moveHead(from motion: Motion) {
         let direction = motion.direction
         for _ in 0..<motion.amount {
-            let prevH = h
             h.move(with: Motion(direction: direction, amount: 1))
-//            print("head moved \(direction.rawValue) from:", prevH, "to:", h)
             
             let vector = getVector()
-//            print("vector between", h, "and:", t, "is:", vector)
             moveTail(basedOn: vector)
         }
     }
@@ -97,9 +107,6 @@ struct Rope {
     }
     
     mutating func moveTail(basedOn vector: Vector)  {
-        defer {
-//            print("head is: \(h) | tail is: \(t) \n")
-        }
         var shouldMove: Bool {
             return vector.x.magnitude > 1 || vector.y.magnitude > 1
         }
@@ -111,10 +118,79 @@ struct Rope {
         } else {
             t = Point(x: t.x + vector.diagonalMovement.x, y: t.y + vector.diagonalMovement.y)
         }
-        print(t, "isInserted:", visitedTails.insert(t).inserted)
-        
-        print(visitedTails.count)
+        visitedTails.insert(t)
     }
 }
 
+struct KnottedRope {
+    var points: [Point] = Array(repeating: Point(x: 0, y: 0), count: 10)
+    
+    var visitedTails: Set<Point> = [Point(x: 0, y: 0)]
+    
+    mutating func moveHead(from motion: Motion) {
+        let direction = motion.direction
+        for _ in 1...motion.amount {
+            points[0].move(with: Motion(direction: direction, amount: 1))
+            for i in points[..<(points.count - 1)].indices {
+                let vector = getVector(p1: points[i] , p2: points[i + 1])
+                points[i + 1] = move(t: points[i + 1], basedOn: vector, h: points[i], isTail: i + 1 == points.count - 1 ? true : false)
+            }
+        }
+    }
+    
+    func getVector(p1: Point, p2: Point) -> Vector {
+        return Vector(x: p1.x - p2.x, y: p1.y - p2.y)
+    }
+    
+    mutating func move(t: Point, basedOn vector: Vector, h: Point, isTail: Bool) -> Point {
+        var shouldMove: Bool {
+            return vector.x.magnitude > 1 || vector.y.magnitude > 1
+        }
+        guard shouldMove else { return t}
+        let newTail: Point
+        if vector.x.magnitude == 2 && vector.y == 0 {
+            newTail = Point(x: (h.x + t.x) / 2, y: t.y)
+        } else if vector.y.magnitude == 2 && vector.x == 0 {
+            newTail = Point(x: t.x, y: (h.y + t.y) / 2)
+        } else if vector.x.magnitude + vector.y.magnitude == 3 {
+            newTail = Point(x: t.x + vector.diagonalMovement.x, y: t.y + vector.diagonalMovement.y)
+        } else {
+            newTail = Point(x: (h.x + t.x) / 2, y: (h.y + t.y) / 2)
+        }
+        // SHOULD ONLY BE THE LAST TAIL
+        if isTail {
+            let res = visitedTails.insert(newTail)
+            
+            if res.inserted {
+                print("newMember:", res.memberAfterInsert)
+            }
+        }
+        return newTail
+    }
+}
 
+/* MINE
+ FIRST 9
+ newMember: Point(x: 1, y: -2)
+ newMember: Point(x: 2, y: -3)
+ newMember: Point(x: 1, y: -4)
+ newMember: Point(x: 2, y: -5)
+ newMember: Point(x: 3, y: -6)
+ newMember: Point(x: 2, y: -7)
+ newMember: Point(x: 1, y: -8)
+ newMember: Point(x: 2, y: -9)
+
+ 
+ 
+ newMember: Point(x: -212, y: 346)
+ newMember: Point(x: -211, y: 345)
+ newMember: Point(x: -210, y: 344)
+ newMember: Point(x: -210, y: 345)
+ newMember: Point(x: -210, y: 346)
+ newMember: Point(x: -210, y: 347)
+ newMember: Point(x: -211, y: 348)
+ newMember: Point(x: -212, y: 349)
+ newMember: Point(x: -213, y: 350)
+ newMember: Point(x: -214, y: 351)
+
+ */
