@@ -87,7 +87,7 @@ class Controller {
     }()
     
     func start() {
-        for j in 0..<10000 {
+        for _ in 0..<10000 {
             for i in 0..<monkies.count {
                 let transfers = monkies[i].throwItems(productOfAllDivisors)
                 business[monkies[i].id] = (business[monkies[i].id] ?? 0) + transfers.count
