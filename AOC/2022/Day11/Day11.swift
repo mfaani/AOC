@@ -9,7 +9,7 @@ import Foundation
 
 extension Y2022 {
     struct Day11 {
-        let reader = Reader(fileName: "day11-sample")
+        let reader = Reader(fileName: "day11")
         lazy var input = reader.read()
         let builder = MonkeyBuilder()
         let controller = Controller()
@@ -51,18 +51,17 @@ struct Monkey {
     var divisor: Int
     var throwTos: [String]
     
-    mutating func throwItems() -> [Transfer] {
+    // ONLY WORKS for part2. Part1, have to go back to a previous commit 🙈
+    mutating func throwItems(_ productOfAllDivisors: Int) -> [Transfer] {
         var transfers: [Transfer] = []
         for item in items {
-            // only used in case of old * old
-            let simpleItem = item % divisor
             
-            let worryLevel = item.apply(Math.Operation(rawValue: operationLogicItems[0])!, with: Int(operationLogicItems[1]) ?? simpleItem)
+            let worryLevel = item.apply(Math.Operation(rawValue: operationLogicItems[0])!, with: Int(operationLogicItems[1]) ?? item)
             var index = 1
             if worryLevel % divisor == 0 {
                 index = 0
             }
-            let adjustedWorry = worryLevel % divisor
+            let adjustedWorry = worryLevel % productOfAllDivisors
             let transfer = Transfer(monkeyId: throwTos[index], item: adjustedWorry)
             transfers.append(transfer)
         }
@@ -83,11 +82,14 @@ struct Transfer {
 class Controller {
     var monkies: [Monkey] = []
     var business: [String: Int] = [:]
+    lazy var productOfAllDivisors: Int = {
+        return monkies.map {$0.divisor}.reduce(1, *)
+    }()
     
     func start() {
         for j in 0..<10000 {
             for i in 0..<monkies.count {
-                let transfers = monkies[i].throwItems()
+                let transfers = monkies[i].throwItems(productOfAllDivisors)
                 business[monkies[i].id] = (business[monkies[i].id] ?? 0) + transfers.count
                 for transfer in transfers {
                     let indexOfReceivingMonkey = Int(transfer.monkeyId)!
