@@ -51,16 +51,18 @@ struct Monkey {
     var divisor: Int
     var throwTos: [String]
     
-    mutating func throwItems() -> [Transfer] {
+    // ONLY WORKS for part2. Part1, have to go back to a previous commit 🙈
+    mutating func throwItems(_ productOfAllDivisors: Int) -> [Transfer] {
         var transfers: [Transfer] = []
         for item in items {
+            
             let worryLevel = item.apply(Math.Operation(rawValue: operationLogicItems[0])!, with: Int(operationLogicItems[1]) ?? item)
             var index = 1
-            let currentWorryLevel = Int(round(Double(worryLevel / 3)))
-            if currentWorryLevel % divisor == 0 {
+            if worryLevel % divisor == 0 {
                 index = 0
             }
-            let transfer = Transfer(monkeyId: throwTos[index], item: Int(round(Double(worryLevel / 3))))
+            let adjustedWorry = worryLevel % productOfAllDivisors
+            let transfer = Transfer(monkeyId: throwTos[index], item: adjustedWorry)
             transfers.append(transfer)
         }
         items.removeAll()
@@ -80,12 +82,14 @@ struct Transfer {
 class Controller {
     var monkies: [Monkey] = []
     var business: [String: Int] = [:]
+    lazy var productOfAllDivisors: Int = {
+        return monkies.map {$0.divisor}.reduce(1, *)
+    }()
     
     func start() {
-        for _ in 0..<20 {
+        for _ in 0..<10000 {
             for i in 0..<monkies.count {
-                
-                let transfers = monkies[i].throwItems()
+                let transfers = monkies[i].throwItems(productOfAllDivisors)
                 business[monkies[i].id] = (business[monkies[i].id] ?? 0) + transfers.count
                 for transfer in transfers {
                     let indexOfReceivingMonkey = Int(transfer.monkeyId)!

@@ -28,5 +28,5 @@ extension Int {
         case .divide:
             return self / num
         }
-    }
+}
 }
