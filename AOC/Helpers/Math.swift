@@ -28,5 +28,18 @@ extension Int {
         case .divide:
             return self / num
         }
+    }
 }
+
+typealias Vector = Point
+typealias Size = Point
+struct Point: Hashable {
+    var x: Int
+    var y: Int
 }
+
+//extension Point {
+//    var straightNeighbors: [Point] {
+//        return [Point(x: x + 1, y: y), Point(x: x - 1, y: y), Point(x: x, y: y + 1), Point(x: x, y: y - 1)]
+//    }
+//}

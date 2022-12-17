@@ -24,10 +24,39 @@ struct Reader{
             return file.components(separatedBy: "mfaani").first!
         }
     }
+    
     // might be used later
     struct Column<T> {
         var one: T
         var two: T
+    }
+    
+    func buildRowsAndColumns(withTrimming: Bool = true) -> Grid {
+        var rows: [[Character]] = []
+        var columns: [[Character]] = []
+        let input = read(withTrimming: withTrimming)
+        for line in input.components(separatedBy: .newlines).filterOutEmpties() {
+            rows.append(Array(line))
+        }
+        var temp: [Character] = []
+        for columnIndex in 0..<rows[1].count {
+            for row in rows {
+                temp.append(row[columnIndex])
+            }
+            columns.append(temp)
+            temp.removeAll()
+        }
+        
+        return Grid(rows: rows, columns: columns)
+    }
+}
+
+struct Grid {
+    let rows: [[Character]]
+    let columns: [[Character]]
+    
+    var size: Size {
+        return Size(x: columns.count, y: rows.count)
     }
 }
 

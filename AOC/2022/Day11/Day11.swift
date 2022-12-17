@@ -56,7 +56,8 @@ struct Monkey {
         var transfers: [Transfer] = []
         for item in items {
             
-            let worryLevel = item.apply(Math.Operation(rawValue: operationLogicItems[0])!, with: Int(operationLogicItems[1]) ?? item)
+            let small = item % productOfAllDivisors
+            let worryLevel = item.apply(Math.Operation(rawValue: operationLogicItems[0])!, with: Int(operationLogicItems[1]) ?? small)
             var index = 1
             if worryLevel % divisor == 0 {
                 index = 0

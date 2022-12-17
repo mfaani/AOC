@@ -39,11 +39,8 @@ extension Y2022 {
         }
     }
 }
-typealias Vector = Point
-struct Point: Hashable {
-    var x: Int
-    var y: Int
-    
+
+extension Point {
     mutating func move(with motion: Motion) {
         switch motion.direction {
         case .U:
