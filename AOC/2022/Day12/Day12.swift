@@ -36,15 +36,11 @@ extension Y2022 {
             
             init(grid: Grid) {
                 self.grid = grid
-                var points: [Point] = []
-                var heights: [Character] = []
                 var _dict: [Point: Elevation] = [:]
                 for (ci, row) in grid.rows.enumerated() {
                     for (ri, char) in row.enumerated() {
                         let point = Point(x: ri, y: ci)
                         _dict.updateValue(Elevation(height: char), forKey: point)
-                        points.append(Point(x: ri, y: ci))
-                        heights.append(char)
                         if char == "S" {
                             startingPoint = point
                         }
