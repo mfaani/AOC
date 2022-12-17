@@ -1,0 +1,18 @@
+Sabqponm
+abcryxxl
+accszExk
+acctuvwj
+abdefghi
+mfaani
+
+add neighbors into a temp array
+for each neighbor
+store visited with a Point system in a dictionary if it's visited.
+
+based on height if you can progress then do it.
+    if currentH >= newH || currentH = newH - 1 {
+    
+    }
+
+otherwise halt...
+
