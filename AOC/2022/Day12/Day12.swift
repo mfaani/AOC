@@ -16,7 +16,7 @@ import Foundation
  */
 extension Y2022 {
     struct Day12 {
-        var reader = Reader(fileName: "day12")
+        var reader = Reader(fileName: "day12-sample")
         lazy var gridInput = reader.buildRowsAndColumns()
         lazy var rows = gridInput.rows
         lazy var map = Map(grid: gridInput)
@@ -68,6 +68,7 @@ extension Y2022 {
                 let univisited = point.neighbors.filter { $0.x < grid.size.x && $0.y < grid.size.y && dict[$0]!.visited == false}
                 
                 for n in univisited {
+                    print("coord: \(point), height: \(dict[point]!), unvisited: \(univisited.map{ dict[$0]!.height}), length: \(length)")
                     let isNeighborJumpable = canJump(from: point, to: n)
                     if isNeighborJumpable {
                         dict[n]!.visited = true
@@ -78,7 +79,7 @@ extension Y2022 {
             
             func canJump(from p1: Point, to p2: Point) -> Bool {
                 let h1 = dict[p1]!.height == "S" ? "a" : dict[p1]!.height
-                let h2 = dict[p2]!.height
+                let h2 = dict[p2]!.height == "E" ? "z" : dict[p2]!.height
                 
                 if h1 >= h2 || h1.asciiValue! == (h2.asciiValue! - 1) {
                     return true
