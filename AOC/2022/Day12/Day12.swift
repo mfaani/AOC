@@ -16,7 +16,7 @@ import Foundation
  */
 extension Y2022 {
     struct Day12 {
-        var reader = Reader(fileName: "day12-sample")
+        var reader = Reader(fileName: "day12")
         lazy var gridInput = reader.buildRowsAndColumns()
         lazy var rows = gridInput.rows
         lazy var map = Map(grid: gridInput)
@@ -69,8 +69,12 @@ extension Y2022 {
                     return
                 }
                 var newNeighbors: [Point] = []
-                let unvisited = level.filter ({ $0.x < grid.size.x && $0.y < grid.size.y && dict[$0]!.visited == false })
+                let unvisited_with_duplicates = level.filter ({ $0.x < grid.size.x && $0.y < grid.size.y && dict[$0]!.visited == false })
+                let unvisited = Array(Set(unvisited_with_duplicates))
+                
+                print("UNVISITED")
                 for point in unvisited {
+                    print(dict[point]!.height)
                     dict[point]?.visited = true
                     if dict[point]?.height == "E" {
                         shortestPath = length
@@ -82,6 +86,7 @@ extension Y2022 {
                         }
                     }
                 }
+                print("------")
                 traverseB(level: newNeighbors, length: length + 1)
             }
             
@@ -116,11 +121,6 @@ extension Y2022 {
                 } else {
                     return false
                 }
-            }
-            
-            mutating func movedTo(_ point: Point) {
-                let h = dict[point]!.height
-                dict.updateValue(Elevation(height: h, visited: true), forKey: point)
             }
         }
     }
