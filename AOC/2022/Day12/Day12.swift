@@ -16,7 +16,7 @@ import Foundation
  */
 extension Y2022 {
     struct Day12 {
-        var reader = Reader(fileName: "day12")
+        var reader = Reader(fileName: "day12-sample")
         lazy var gridInput = reader.buildRowsAndColumns()
         lazy var rows = gridInput.rows
         lazy var map = Map(grid: gridInput)
@@ -59,7 +59,7 @@ extension Y2022 {
             var shortestPath = Int.max
             
             mutating func breadthStart() {
-                traverseB(level: startingNeighbors, length: 0)
+                traverseB(level: [startingPoint], length: 0)
             }
             
             /// BFS vs DFS in **Graphs**: with BFS your next iteration is an level in the graph. WIth DFS, your next iteration is only a single node progress of a single path.
