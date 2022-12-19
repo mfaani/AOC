@@ -22,8 +22,13 @@ extension Y2022 {
         lazy var map = Map(grid: gridInput)
         
         mutating func solveA() -> Int {
-//            map.start()
-            map.breadthStart()
+            map.breadthStart(startingPoints: [map.startingPoint])
+            return map.shortestPath
+        }
+        
+        mutating func solveB() -> Int {
+            fatalError("If you solveB, then don't solveA in the same run...")
+            map.breadthStart(startingPoints: map.startingAs)
             return map.shortestPath
         }
         
@@ -46,6 +51,9 @@ extension Y2022 {
                             startingPoint = point
                             startingNeighbors = point.positiveNeighbors
                         }
+                        if char == "a" {
+                            startingAs.append(point)
+                        }
                     }
                 }
                 self.dict = _dict
@@ -54,12 +62,13 @@ extension Y2022 {
             var dict: [Point: Elevation]
             var startingPoint: Point = Point(x: 0, y: 0)
             var startingNeighbors: [Point] = []
+            var startingAs: [Point] = []
             
             var visitedPoints: Set<Point> = []
             var shortestPath = Int.max
             
-            mutating func breadthStart() {
-                traverseB(level: [startingPoint], length: 0)
+            mutating func breadthStart(startingPoints: [Point]) {
+                traverseB(level: startingPoints, length: 0)
             }
             
             /// BFS vs DFS in **Graphs**: with BFS your next iteration is an level in the graph. WIth DFS, your next iteration is only a single node progress of a single path.
@@ -74,7 +83,6 @@ extension Y2022 {
                 
                 print("UNVISITED")
                 for point in unvisited {
-                    print(dict[point]!.height)
                     dict[point]?.visited = true
                     if dict[point]?.height == "E" {
                         shortestPath = length
@@ -86,30 +94,7 @@ extension Y2022 {
                         }
                     }
                 }
-                print("------")
                 traverseB(level: newNeighbors, length: length + 1)
-            }
-            
-            mutating func start() {
-                dict[startingPoint]!.visited = true
-                traverse(point: startingPoint, length: 0)
-            }
-            
-            mutating func traverse(point: Point, length: Int) {
-                if dict[point]!.height == "E" {
-                    shortestPath = min(shortestPath, length)
-                }
-                /// - NOTE: Accessing `dict[$0]!` is purposely the last condition. Because if the x or y are out of the grid then the dictionary lookup would crash.
-                let univisited = point.positiveNeighbors.filter { $0.x < grid.size.x && $0.y < grid.size.y && dict[$0]!.visited == false }
-                
-                for n in univisited {
-                    print("coord: \(point), height: \(dict[point]!), unvisited: \(univisited.map{ dict[$0]!.height}), length: \(length)")
-                    let isNeighborJumpable = canJump(from: point, to: n)
-                    if isNeighborJumpable {
-                        dict[n]!.visited = true
-                        traverse(point: n, length: length + 1)
-                    }
-                }
             }
             
             func canJump(from p1: Point, to p2: Point) -> Bool {
