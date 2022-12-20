@@ -12,10 +12,12 @@ struct Reader{
     let fileName: String
     let bundle = Bundle.main
     
+    /// Reads from the input file. Removes my personal comments.
+    /// - Parameter withTrimming: A Boolean indicated whether it should trim the beginning and end of entire conent.
+    /// - Returns: returns original input. 
     func read(withTrimming: Bool = true) -> String {
         let inputURL = bundle.path(forResource: fileName, ofType: "txt")!
         let file = try! String(contentsOfFile: inputURL)
-        let trimmedInput = file.trimmingCharacters(in: .whitespaces)
         
         /// - Attention: anything after 'mfaani' is considered notes for myself :D 
         if withTrimming {
@@ -65,3 +67,4 @@ extension Collection where Element: StringProtocol {
         return self.filter { !$0.isEmpty }
     }
 }
+
