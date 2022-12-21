@@ -10,11 +10,12 @@ import Foundation
 
 extension Y2022 {
     struct Day13 {
-        var reader = Reader(fileName: "day13-sample")
+        var reader = Reader(fileName: "day13")
         lazy var input = reader.read()
         let decoder = JSONDecoder()
         var count = 0
         var pairNum = 0
+        var counts: [Int] = []
         mutating func solve() -> Int {
             for pair in input.components(separatedBy: "\n\n") {
                 pairNum += 1
@@ -26,6 +27,35 @@ extension Y2022 {
                 }
             }
             return count
+        }
+        var all: [Packet] = []
+        mutating func solveB() -> Int {
+            for line in input.components(separatedBy: .newlines).filterOutEmpties() {
+                let packet = try! decoder.decode(Packet.self, from: line.data(using: .utf8)!)
+                all.append(packet)
+            }
+            let two = Packet.list([Packet.value((2))])
+            let six = Packet.list([Packet.value((6))])
+            all.append(two)
+            all.append(six)
+            all.sort()
+            
+            let indexOfTwo = all.enumerated().first { tup in
+                return tup.element == two
+            }
+            
+            let indexOfSix = all.enumerated().first { tup in
+                return tup.element == six
+            }
+            
+            let i2 = indexOfTwo!.offset
+            let i6 = indexOfSix!.offset
+            
+            for item in all {
+                print(item)
+            }
+            
+            return (i2 + 1) * (i6 + 1)
         }
     }
     
