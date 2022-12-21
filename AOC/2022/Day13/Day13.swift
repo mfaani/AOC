@@ -87,9 +87,7 @@ extension Y2022 {
             } catch {
                 self = try! Packet.list(container.decode([Packet].self))
             }
-        }
-        
-        
+        }        
     }
 }
 

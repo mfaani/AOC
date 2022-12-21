@@ -52,12 +52,12 @@ extension Point {
             let minY = min(y, p2.y)
             let maxY = max(y, p2.y)
             
-            return ((minY + 1)...(maxY - 1)).map { Point(x: x, y: $0)}
+            return (minY...maxY).map { Point(x: x, y: $0)}
         } else if y == p2.y {
             let minX = min(x, p2.x)
             let maxX = max(x, p2.x)
             
-            return ((minX)...(maxX - 1)).map { Point(x: $0, y: y)}
+            return (minX...maxX).map { Point(x: $0, y: y)}
         } else {
             fatalError()
         }
