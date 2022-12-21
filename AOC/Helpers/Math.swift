@@ -43,3 +43,24 @@ struct Point: Hashable {
 //        return [Point(x: x + 1, y: y), Point(x: x - 1, y: y), Point(x: x, y: y + 1), Point(x: x, y: y - 1)]
 //    }
 //}
+
+extension Point {
+    /// returns the points between two points.
+    /// - ATTENTION: Will crash if the line isn't straight.
+    func inBetweenPoints(with p2: Point) -> [Point] {
+        if x == p2.x {
+            let minY = min(y, p2.y)
+            let maxY = max(y, p2.y)
+            
+            return ((minY + 1)...(maxY - 1)).map { Point(x: x, y: $0)}
+        } else if y == p2.y {
+            let minX = min(x, p2.x)
+            let maxX = max(x, p2.x)
+            
+            return ((minX)...(maxX - 1)).map { Point(x: $0, y: y)}
+        } else {
+            fatalError()
+        }
+    }
+}
+
