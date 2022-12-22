@@ -21,23 +21,30 @@ extension Y2022 {
         var isWithinBounds = true
         var count = 0
         
-        lazy var outOfBoundsRanges: (PartialRangeThrough<Int>, PartialRangeFrom<Int>) = {
+        lazy var outOfBoundsRanges: (PartialRangeThrough<Int>, PartialRangeFrom<Int>, Int) = {
             var maxX = Int.min
             var minX = Int.max
+            var maxY = Int.min
             
             for (key,value) in grid {
                 minX = min(minX, key.x)
                 maxX = max(maxX, key.x)
+                maxY = max(maxY, key.y)
             }
             let rightRange = (maxX + 1)...
             let leftRange = ...(minX - 1)
                         
-            return (leftRange, rightRange)
+            return (leftRange, rightRange, maxY)
         }()
         
         mutating func solveA() -> Int{
             for line in input.components(separatedBy: .newlines).filterOutEmpties() {
                 placeRocks(from: line.components(separatedBy: " -> ").map(Point.init(str:)))
+            }
+            
+            /// I just dumped `400` to each side. Didn't think more was needed. And it wasn't!
+            ((outOfBoundsRanges.0.upperBound - 400)...(outOfBoundsRanges.1.lowerBound + 400)).forEach {
+                grid[Point(x: $0, y: outOfBoundsRanges.2 + 2)] = .rock
             }
             pourSand()
             return count
@@ -65,12 +72,17 @@ extension Y2022 {
             }
         }
         
+        var didNotReturnPart1 = true
         mutating func fall(from p: Point) {
             let next = p.nextPossibleDroppingPoint
+
+            //          Part1 terminating condition
+            if isOutOfBounds(from: p) && didNotReturnPart1 {
+               print("part1:", count)
+                didNotReturnPart1 = false
+            }
             
-            if isOutOfBounds(from: p) {
-                isWithinBounds = false
-            } else if grid[next[0]] == nil {
+            if grid[next[0]] == nil {
                 // fall down
                 fall(from: next[0])
             } else if grid[next[1]] == nil {
@@ -82,6 +94,11 @@ extension Y2022 {
             } else {
                 grid[p] = .sand
                 count += 1
+                
+                // part 2 terminating Condition. Only if the last item is just diagonally to the bottom right, then there's no more space...
+                if p == Point(x: 501, y: 1) {
+                    isWithinBounds = false
+                }
             }
 
         }
