@@ -37,7 +37,7 @@ extension Y2022 {
         
         mutating func solveA() -> Int{
             for line in input.components(separatedBy: .newlines).filterOutEmpties() {
-                placeRocks(from: line.components(separatedBy: " -> ").map(createPoint(from:)))
+                placeRocks(from: line.components(separatedBy: " -> ").map(Point.init(str:)))
             }
             pourSand()
             return count

@@ -62,5 +62,11 @@ extension Point {
             fatalError()
         }
     }
+    
+    init(str: String) {
+        let parts = str.components(separatedBy: ",")
+        x = Int(parts[0])!
+        y = Int(parts[1])!
+    }
 }
 
