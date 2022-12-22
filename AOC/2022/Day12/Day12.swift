@@ -117,9 +117,3 @@ private extension Point {
         return straightNeighbors.filter { $0.x >= 0 && $0.y >= 0 }
     }
 }
-
-extension Point {
-    var straightNeighbors: [Point] {
-        return [Point(x: x + 1, y: y), Point(x: x - 1, y: y), Point(x: x, y: y + 1), Point(x: x, y: y - 1)]
-    }
-}

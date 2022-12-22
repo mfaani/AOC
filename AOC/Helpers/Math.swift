@@ -38,13 +38,15 @@ struct Point: Hashable {
     var y: Int
 }
 
-//extension Point {
-//    var straightNeighbors: [Point] {
-//        return [Point(x: x + 1, y: y), Point(x: x - 1, y: y), Point(x: x, y: y + 1), Point(x: x, y: y - 1)]
-//    }
-//}
-
 extension Point {
+    
+    func manahattanDistance(with p2: Point) -> Int {
+        return Int((x - p2.x).magnitude + (y - p2.y).magnitude)
+    }
+    
+    var straightNeighbors: [Point] {
+        return [Point(x: x + 1, y: y), Point(x: x - 1, y: y), Point(x: x, y: y + 1), Point(x: x, y: y - 1)]
+    }
     /// returns the points between two points.
     /// - ATTENTION: Will crash if the line isn't straight.
     func inBetweenPoints(with p2: Point) -> [Point] {
