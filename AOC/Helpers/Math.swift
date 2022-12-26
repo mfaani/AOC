@@ -44,6 +44,11 @@ extension Point {
         return Int((x - p2.x).magnitude + (y - p2.y).magnitude)
     }
     
+    func manhattanVector(to p2: Point) -> Vector {
+        return Point(x: p2.x - x, y: p2.y - y)
+    }
+    
+    
     var straightNeighbors: [Point] {
         return [Point(x: x + 1, y: y), Point(x: x - 1, y: y), Point(x: x, y: y + 1), Point(x: x, y: y - 1)]
     }

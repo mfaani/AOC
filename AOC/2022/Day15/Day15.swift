@@ -15,13 +15,15 @@ extension Y2022 {
             case none
         }
         
+        let targetRow: Int
         let input: String
-        var g: GridG<Item> = GridG()
+        var g: GridG<Point,Item> = GridG()
         
         /// - Attention: requires input alteration.
         /// I just removed all the strings. Turned into an array. 
-        init() {
-            let reader = Reader(fileName: "day15")
+        init(fileName: String = "day15", targetRow: Int = 2000000) {
+            let reader = Reader(fileName: fileName)
+            self.targetRow = targetRow
             input = reader.read()
         }
         
@@ -35,7 +37,7 @@ extension Y2022 {
                 markNoneBeaconsBasedOn(sensor, and: beacon)
             }
             
-            return g.coordinates.filter { $0.key.y == 2000000 && $0.value == .none}.count
+            return g.coordinates.filter { $0.value == .none}.count
         }
         func markNoneBeaconsBasedOn(_ sensor: Point, and beacon: Point) {
             g.set(sensor, to: .sensor)
@@ -66,11 +68,11 @@ extension Y2022 {
     }
 }
 
-
-struct GridG<T> {
-    var coordinates: [Point: T] = [:]
+/// TBH not much different from a normal dictionary.
+struct GridG<K: Hashable, V> {
+    var coordinates: [K: V] = [:]
     
-    mutating func set(_ point: Point, to value: T, shouldOverride: Bool = true) {
+    mutating func set(_ point: K, to value: V, shouldOverride: Bool = true) {
         if shouldOverride {
             coordinates[point] = value
         } else if coordinates[point] == nil {
